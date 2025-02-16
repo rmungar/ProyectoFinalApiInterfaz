@@ -51,7 +51,7 @@ Documento donde vamos a almacenar la información sobre las tareas que se les as
 + _**POST**_ > **usuarios/register** > Endpoint que va a permitir realizar un registro de un usuario pasado por el cuerpo de la petición en la aplicación. 
 
     Devolverá un _CREATED_ si la creación es realizada sin problemas o un _BAD_REQUEST_ si no.
-+ _**UPDATE**_ > **usuarios/update/{_id}** > Endpoint que va a permitir actualizar los campos de un usuario cuyo _id coincida con el valor pasado por parámetro con los campos de usuario introducidos por el cuerpo de la petición. 
++ _**UPDATE**_ > **usuarios/update** > Endpoint que va a permitir actualizar los campos de un usuario cuyo _id coincida con el valor pasado por el cuerpo de la petición. 
 
     Devuelve un _OK_ si la actualización es correcta o un _BAD_REQUEST_ si algún campo no es válido.
 + _**DELETE**_ > **usuarios/delete/{_id}** > Endpoint que permite eliminar a un usuario de la aplicación.

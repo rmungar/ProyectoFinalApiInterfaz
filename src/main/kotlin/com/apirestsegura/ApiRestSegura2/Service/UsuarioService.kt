@@ -5,6 +5,7 @@ import com.apirestsegura.ApiRestSegura2.Dto.UsuarioDTO
 import com.apirestsegura.ApiRestSegura2.Dto.UsuarioRegisterDTO
 import com.apirestsegura.ApiRestSegura2.Error.exception.BadRequestException
 import com.apirestsegura.ApiRestSegura2.Error.exception.UnauthorizedException
+import com.apirestsegura.ApiRestSegura2.Error.exception.UserNotFoundException
 import com.apirestsegura.ApiRestSegura2.Model.Usuario
 import com.apirestsegura.ApiRestSegura2.Repository.UsuarioRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import kotlin.jvm.optionals.getOrNull
 
 @Service
 class UsuarioService : UserDetailsService {
@@ -93,5 +95,20 @@ class UsuarioService : UserDetailsService {
             usuarioAinsertar.roles
         )
 
+    }
+
+    fun updateUser(usuarioInsertadoDTO: UsuarioRegisterDTO): UsuarioDTO? {
+
+        val previousUserData = usuarioRepository.findByUsername(usuarioInsertadoDTO.username).getOrNull()
+
+        if (previousUserData == null) {
+            throw UserNotFoundException(usuarioInsertadoDTO.email)
+        }
+        else {
+            previousUserData.username = usuarioInsertadoDTO.username
+            previousUserData.password = passwordEncoder.encode(usuarioInsertadoDTO.password)
+            previousUserData.direccion =  usuarioInsertadoDTO.direccion
+            previousUserData.roles = usuarioInsertadoDTO.rol ?: "USER"
+        }
     }
 }
