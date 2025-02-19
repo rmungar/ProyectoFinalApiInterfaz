@@ -109,6 +109,7 @@ class UsuarioService : UserDetailsService {
             previousUserData.password = passwordEncoder.encode(usuarioInsertadoDTO.password)
             previousUserData.direccion =  usuarioInsertadoDTO.direccion
             previousUserData.roles = usuarioInsertadoDTO.rol ?: "USER"
+            return null
         }
     }
 }

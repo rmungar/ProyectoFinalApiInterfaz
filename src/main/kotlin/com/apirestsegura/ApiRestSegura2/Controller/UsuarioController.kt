@@ -29,9 +29,6 @@ import org.springframework.web.bind.annotation.RestController
 class UsuarioController {
 
     @Autowired
-    private lateinit var jwtDecoderByIssuerUri: SupplierJwtDecoder
-
-    @Autowired
     private lateinit var authenticationManager: AuthenticationManager
     @Autowired
     private lateinit var tokenService: TokenService
@@ -88,8 +85,6 @@ class UsuarioController {
         } catch (e: AuthenticationException) {
             throw UnauthorizedException("Credenciales incorrectas")
         }
-
-
     }
 
 
