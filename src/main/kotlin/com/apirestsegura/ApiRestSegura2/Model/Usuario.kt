@@ -12,7 +12,7 @@ data class Usuario(
     var password: String,
     val email: String,
     var direccion: Direccion,
-    var roles: String = "USER"
+    var rol: String = "USER"
 
 ){
     init {

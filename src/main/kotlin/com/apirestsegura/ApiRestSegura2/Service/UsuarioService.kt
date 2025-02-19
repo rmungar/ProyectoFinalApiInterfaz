@@ -4,7 +4,6 @@ package com.apirestsegura.ApiRestSegura2.Service
 import com.apirestsegura.ApiRestSegura2.Dto.UsuarioDTO
 import com.apirestsegura.ApiRestSegura2.Dto.UsuarioRegisterDTO
 import com.apirestsegura.ApiRestSegura2.Error.exception.BadRequestException
-import com.apirestsegura.ApiRestSegura2.Error.exception.UnauthorizedException
 import com.apirestsegura.ApiRestSegura2.Error.exception.UserNotFoundException
 import com.apirestsegura.ApiRestSegura2.Model.Usuario
 import com.apirestsegura.ApiRestSegura2.Repository.UsuarioRepository
@@ -30,13 +29,13 @@ class UsuarioService : UserDetailsService {
         val usuario: Usuario = usuarioRepository
             .findByUsername(username!!)
             .orElseThrow {
-                UnauthorizedException("$username no existente")
+                UserNotFoundException("No se encontró un usuario con el nombre: $username.")
             }
 
         return User.builder()
             .username(usuario.username)
             .password(usuario.password)
-            .roles(usuario.roles)
+            .roles(usuario.rol)
             .build()
     }
 
@@ -92,24 +91,51 @@ class UsuarioService : UserDetailsService {
         return UsuarioDTO(
             usuarioAinsertar.username,
             usuarioAinsertar.email,
-            usuarioAinsertar.roles
+            usuarioAinsertar.rol
         )
 
     }
 
     fun updateUser(usuarioInsertadoDTO: UsuarioRegisterDTO): UsuarioDTO? {
 
-        val previousUserData = usuarioRepository.findByUsername(usuarioInsertadoDTO.username).getOrNull()
+        val previousUserData = usuarioRepository.findById(usuarioInsertadoDTO.email).getOrNull()
 
         if (previousUserData == null) {
-            throw UserNotFoundException(usuarioInsertadoDTO.email)
+            throw UserNotFoundException("No se encontró un usuario con id: ${usuarioInsertadoDTO.email}")
         }
         else {
             previousUserData.username = usuarioInsertadoDTO.username
             previousUserData.password = passwordEncoder.encode(usuarioInsertadoDTO.password)
             previousUserData.direccion =  usuarioInsertadoDTO.direccion
-            previousUserData.roles = usuarioInsertadoDTO.rol ?: "USER"
-            return null
+            previousUserData.rol = usuarioInsertadoDTO.rol ?: "USER"
+
+            usuarioRepository.save(previousUserData)
+
+            return UsuarioDTO(
+                previousUserData.username,
+                previousUserData.email,
+                previousUserData.rol,
+            )
         }
+    }
+
+    fun deleteUser(usuarioId: String): Boolean {
+
+
+        val userToDelete = usuarioRepository.findById(usuarioId).getOrNull()
+
+        if (userToDelete == null) {
+            throw UserNotFoundException(usuarioId)
+        }
+        else{
+            try {
+                usuarioRepository.deleteById(usuarioId)
+                return true
+            }
+            catch (e: IllegalArgumentException) {
+                return false
+            }
+        }
+
     }
 }

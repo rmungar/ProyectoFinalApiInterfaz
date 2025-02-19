@@ -1,29 +1,21 @@
 package com.apirestsegura.ApiRestSegura2.Controller
 
 import com.apirestsegura.ApiRestSegura2.Dto.LoginUsuarioDTO
-import com.apirestsegura.ApiRestSegura2.Dto.UsuarioDTO
 import com.apirestsegura.ApiRestSegura2.Dto.UsuarioRegisterDTO
 import com.apirestsegura.ApiRestSegura2.Error.exception.BadRequestException
 import com.apirestsegura.ApiRestSegura2.Error.exception.UnauthorizedException
-import com.apirestsegura.ApiRestSegura2.Model.Usuario
 import com.apirestsegura.ApiRestSegura2.Service.TokenService
 import com.apirestsegura.ApiRestSegura2.Service.UsuarioService
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.mongodb.repository.Update
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
-import org.springframework.security.oauth2.jwt.SupplierJwtDecoder
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
+
 @RequestMapping("/usuarios")
 @RestController
 class UsuarioController {
@@ -69,7 +61,7 @@ class UsuarioController {
 
     }
 
-    @PostMapping("/login")
+    @GetMapping("/login")
     fun login(
         httpRequest: HttpServletRequest,
         @RequestBody usuario: LoginUsuarioDTO
@@ -85,6 +77,9 @@ class UsuarioController {
         } catch (e: AuthenticationException) {
             throw UnauthorizedException("Credenciales incorrectas")
         }
+        catch (e: Exception) {
+            return ResponseEntity(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
+        }
     }
 
 
@@ -95,22 +90,44 @@ class UsuarioController {
         @RequestBody userData: UsuarioRegisterDTO
     ): ResponseEntity<Any>? {
         try {
-            val authentication = authenticationManager.authenticate(UsernamePasswordAuthenticationToken(userData.username, userData.password))
-            if (authentication.isAuthenticated) {
-                val result = usuarioService.updateUser(userData)
-                if (result != null) {
-                    return ResponseEntity(result, HttpStatus.OK)
-                }
-                else {
-                    return ResponseEntity(result, HttpStatus.BAD_REQUEST)
-                }
-            }
-            else {
-                throw UnauthorizedException("Credenciales incorrectas.")
+            val result = usuarioService.updateUser(userData)
+            return if (result != null) {
+                ResponseEntity(result, HttpStatus.OK)
+            } else {
+                ResponseEntity(null, HttpStatus.BAD_REQUEST)
             }
         }
         catch (e: AuthenticationException) {
             throw UnauthorizedException("Credenciales incorrectas")
+        }
+        catch (e: Exception) {
+            return ResponseEntity(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+    }
+
+
+
+    @DeleteMapping("/delete/{usuarioId}")
+    fun deleteUser(
+        httpRequest: HttpServletRequest,
+        @PathVariable("usuarioId") usuarioId: String?
+    ): ResponseEntity<Any>? {
+        try {
+            if (usuarioId != null) {
+                val result = usuarioService.deleteUser(usuarioId)
+                return if (result) {
+                    ResponseEntity("Usuario borrado correctamente.", HttpStatus.OK)
+                } else ResponseEntity("No existe un usuario con ese id", HttpStatus.BAD_REQUEST)
+            }
+            else {
+                return ResponseEntity("El id de usuario no puede ser nulo.", HttpStatus.BAD_REQUEST)
+            }
+        }
+        catch (e: UnauthorizedException) {
+            return ResponseEntity(e.message, HttpStatus.UNAUTHORIZED)
+        }
+        catch (e: Exception) {
+            return ResponseEntity(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 }
