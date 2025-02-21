@@ -61,7 +61,7 @@ class UsuarioController {
 
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     fun login(
         httpRequest: HttpServletRequest,
         @RequestBody usuario: LoginUsuarioDTO

@@ -40,7 +40,7 @@ class SecurityConfig {
             .authorizeHttpRequests { auth -> auth
 
                 // USUARIOS
-                .requestMatchers(HttpMethod.GET, "/usuarios/login").permitAll()
+                .requestMatchers(HttpMethod.POST, "/usuarios/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/usuarios/register").permitAll()
                 .requestMatchers(HttpMethod.PUT, "/usuarios/login").authenticated()
                 .requestMatchers(HttpMethod.DELETE, "/usuarios/login").hasRole("ADMIN")
