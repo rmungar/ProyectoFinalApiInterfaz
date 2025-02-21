@@ -49,8 +49,20 @@ class UsuarioService : UserDetailsService {
         if (usuarioInsertadoDTO.password != usuarioInsertadoDTO.passwordRepeat) throw BadRequestException("Las contraseñas ingresadas no coinciden.")
         if (usuarioInsertadoDTO.rol.isNullOrBlank()) throw BadRequestException("El rol del usuario no puede estar vacío o ser nulo.")
         if (usuarioInsertadoDTO.direccion.calle.isBlank()) throw BadRequestException("La calle no puede estar vacía.")
-
-
+        try {
+            usuarioInsertadoDTO.direccion.num.toInt()
+            if (usuarioInsertadoDTO.direccion.num.isBlank()) throw BadRequestException("El número de la dirección no puede estar vacío.")
+        }
+        catch (e: Exception){
+            throw BadRequestException("El número de la dirección no puede ser una letra.")
+        }
+        try {
+            usuarioInsertadoDTO.direccion.cp.toInt()
+            if (usuarioInsertadoDTO.direccion.num.isBlank()) throw BadRequestException("El código postal de la dirección no puede estar vacío.")
+        }
+        catch (e: Exception){
+            throw BadRequestException("El código postal no puede ser una letra.")
+        }
         val usuarioProv = usuarioInsertadoDTO.direccion.provincia.uppercase()
         val usuarioMunicipio = usuarioInsertadoDTO.direccion.municipio.uppercase()
         var CPRO = ""
@@ -136,6 +148,5 @@ class UsuarioService : UserDetailsService {
                 return false
             }
         }
-
     }
 }
