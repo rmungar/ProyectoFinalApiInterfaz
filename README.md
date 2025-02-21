@@ -76,30 +76,163 @@ Documento donde vamos a almacenar la información sobre las tareas que se les as
 
 # PRUEBAS GESTIÓN USUARIOS
 
+## ANTES DE EMPEZAR
 
-## LOGIN CORRECTO
+Antes de empezar, en la base de datos contamos con los siguientes datos:
 
-### DESCRIPCIÓN
+![contenidoBD.png](src/main/resources/images/contenidoBD.png)
 
-### CAPTURAS
-
-***
-## LOGIN INCORRECTO
-
-### DESCRIPCIÓN
-
-### CAPTURAS
+O lo que es lo mismo, un único usuario sobre el que probar el login.
 
 ***
-## REGISTER VÁLIDO
+# LOGIN CORRECTO
 
 ### DESCRIPCIÓN
+  
+En esta prueba vamos a simular lo que sería un intento de login válido, es decir, usuario y contraseña correctos. Para que el botón de iniciar sesión funcione, el campo usuario debe tener más de 3 caracteres y el campo contraseña más de 6.
 
-### CAPTURAS
+## CAPTURAS
+
+![datosLoginCorrecto.png](src/main/resources/images/Login/datosLoginCorrecto.png)
+
+### **Username**: prueba
+
+### **Password**: passwordPrueba
+
+![loginCorrecto.png](src/main/resources/images/Login/loginCorrecto.png)
+
 
 ***
-## REGISTERS FALLIDOS
+
+# LOGINS INCORRECTOS
 
 ### DESCRIPCIÓN
 
-### CAPTURAS
+En esta prueba vamos a simular lo que sería un intento de login no válido, es decir, usuario o contraseña incorrectos. 
+
+Esto puede deberse a: 
+
++ Credenciales incorrectas.
++ No se han cumplido los requisitos de longitud en los campos.
++ Uno de los campos no se ha rellenado.
+
+## CAPTURAS
+
+### Credenciales incorrectas
+
+![loginCredencialesIncorrectas.png](src/main/resources/images/Login/loginCredencialesIncorrectas.png)
+
+### **Username**: Pepe > No existe en la base de datos.
+
+### **Password**: pepepep > No existe en la base de datos.
+
+***
+
+### Longitud de campos no cumplida
+
+![loginLongitudNoCumplida.png](src/main/resources/images/Login/loginLongitudNoCumplida.png)
+
+
+### **Username**: Pepe > No existe en la base de datos.
+
+### **Password**: pepe > No cumple con la longitud mínima.
+
+***
+
+### Campos sin rellenar
+
+![loginConCampoSinRellenar.png](src/main/resources/images/Login/loginConCampoSinRellenar.png)
+
+### **Username**: Pepe > No existe en la base de datos.
+
+### **Password**: 
+
+***
+
+# REGISTER VÁLIDO
+
+## DESCRIPCIÓN
+
+En esta prueba vamos a simular un intento de registro válido. Esto se llevará a cabo rellenando todos los campos que requiera la aplicación y que los valores introducidos cumplan con los requisitos. Para saber que ha sido correcto, la aplicación nos llevará de vuelta a la pantalla de registro y nos mostrará un mensaje indicativo.
+
+## CAPTURAS
+
+![datosRegisterCorrecto.png](src/main/resources/images/Register/datosRegisterCorrecto.png)
+
+![registerExitoso.png](src/main/resources/images/Register/registerExitoso.png)
+
+![comprobacionRegsiter.png](src/main/resources/images/Register/comprobacionRegister.png)
+
+![comprobacionRegisterExitoso2.png](src/main/resources/images/Register/comprobacionRegisterExitoso2.png)
+
+![contenidoBD2.png](src/main/resources/images/contenidoBD2.png)
+
+***
+# REGISTERS FALLIDOS
+
+## DESCRIPCIÓN
+
+En esta prueba vamos a simular lo que sería un intento de registro no válido, es decir, cualquier campo no ha sido rellenado o no ha pasado la lógica de negocio.
+
+Esto puede deberse a:
+
++ Credenciales repetidas (Nombre de usuario).
++ Uno de los campos no se ha rellenado.
++ Se ha insertado un valor que no corresponde.
++ Se ha insertado una provincia que no existe.
++ Se ha insertado un municipio que no pertenece a una provincia.
++ Las contraseñas no coinciden.
+
+## CAPTURAS
+
+### Nombre de usuario duplicado
+
+![nombreUsuarioDuplicado.png](src/main/resources/images/Register/nombreUsuarioDuplicado.png)
+
+![logCat1.png](src/main/resources/images/Register/logCat1.png)
+
+***
+
+### Campos sin rellenar
+
+![campoNoRellenado.png](src/main/resources/images/Register/campoNoRellenado.png)
+
+***
+
+### Valor equivocado 1
+
+![valorEquivocado1.png](src/main/resources/images/Register/valorEquivocado1.png)
+
+![logCat2.png](src/main/resources/images/Register/logCat2.png)
+
+***
+
+### Valor equivocado 2
+
+![valorEquivocado2.png](src/main/resources/images/Register/valorEquivocado2.png)
+
+![logCat3.png](src/main/resources/images/Register/logCat3.png)
+
+***
+
+### Provincia no existe
+
+![provinciaNoExiste.png](src/main/resources/images/Register/provinciaNoExiste.png)
+
+![logCat4.png](src/main/resources/images/Register/logCat4.png)
+
+***
+
+### Municipio no pertenece a la provincia
+
+![municipioNoPertenece.png](src/main/resources/images/Register/municipioNoPertenece.png)
+
+![logCat5.png](src/main/resources/images/Register/logCat5.png)
+
+***
+
+### Contraseñas no coinciden
+
+![passwordNoCoinciden.png](src/main/resources/images/Register/passwordNoCoinciden.png)
+
+![logCat6.png](src/main/resources/images/Register/logCat6.png)
