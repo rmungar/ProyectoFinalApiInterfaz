@@ -72,3 +72,34 @@ Documento donde vamos a almacenar la información sobre las tareas que se les as
 + _**DELETE**_ > **tareas/delete/{_idTarea}** > Endpoint que permite eliminar una tarea de un usuario. Si el usuario es USER, solo puede eliminar una tarea propia y si el usuario es ADMIN, puede borrar cualquier tarea de cualquier usuario.
 
     Devolverá _OK_ en caso correcto, _NOT_FOUND_ en caso de que no exista ninguna tarea con ese _id o _BAD_REQUEST_ si el usuario (en caso de que no sea ADMIN) intenta borrar una tarea que no le pertenece.
+
+
+# PRUEBAS GESTIÓN USUARIOS
+
+
+## LOGIN CORRECTO
+
+### DESCRIPCIÓN
+
+### CAPTURAS
+
+***
+## LOGIN INCORRECTO
+
+### DESCRIPCIÓN
+
+### CAPTURAS
+
+***
+## REGISTER VÁLIDO
+
+### DESCRIPCIÓN
+
+### CAPTURAS
+
+***
+## REGISTERS FALLIDOS
+
+### DESCRIPCIÓN
+
+### CAPTURAS
