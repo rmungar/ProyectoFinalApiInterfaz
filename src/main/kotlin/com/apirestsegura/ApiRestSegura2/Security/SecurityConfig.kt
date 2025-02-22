@@ -46,7 +46,7 @@ class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/usuarios/delete/{usuarioId}").hasRole("ADMIN")
 
                 // TAREAS
-
+                .requestMatchers(HttpMethod.POST, "/tareas/crear").authenticated()
 
 
 

@@ -1,5 +1,6 @@
 package com.apirestsegura.ApiRestSegura2.Model
 
+import com.apirestsegura.ApiRestSegura2.Dto.UsuarioDTO
 import org.bson.codecs.pojo.annotations.BsonId
 import org.springframework.data.mongodb.core.mapping.Document
 import java.util.Date
@@ -11,7 +12,7 @@ data class Tarea(
     val titulo: String,
     var estado: Boolean = false,
     val descripcion: String,
-    val usuario: Usuario,
+    val usuario: UsuarioDTO,
     val fechaProgramada: Date
 ) {
 }

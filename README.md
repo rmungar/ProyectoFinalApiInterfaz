@@ -37,7 +37,7 @@ Documento donde vamos a almacenar la información sobre las tareas que se les as
 + El campo `titulo` no puede estar vacío o ser nulo.
 + El campo `descripcion` no puede estar vacío o ser nulo.
 + El campo `usuario`no puede estar vacío o ser nulo. Debe ser un usuario registrado en la aplicación.
-+ El campo `fechaProgramada` sera comprobado automáticamente para evitar asignaciones con fecha previa a la fecha del momento de creación. No puede ser un valor nulo.
++ El campo `fechaProgramada` será comprobado automáticamente para evitar asignaciones con fecha previa a la fecha del momento de creación. No puede ser un valor nulo.
 
 
 ## **Endpoints**
@@ -60,10 +60,10 @@ Documento donde vamos a almacenar la información sobre las tareas que se les as
 
 ### Tareas
 
-+ _**POST**_ > **tareas/add/{_idUsuario}** > Endpoint que permite a un usuario con rol USER añadirse una tarea a sí mismo o a un usuario ADMIN añadirle una tarea a cualquier usuario.
++ _**POST**_ > **tareas/crear** > Endpoint que permite a un usuario con rol USER añadirse una tarea a sí mismo o a un usuario ADMIN añadirle una tarea a cualquier usuario.
 
     Devolverá un _CREATED_ en caso de que se cumplan todos los requisitos de lógica de negocio o un _BAD_REQUEST_ si no los cumple.
-+ _**GET**_ > **tareas/obtener{_idUsuario}** > Endpoint que retorna todas las tareas creadas. Si el usuario es USER, solo verá las suyas y si el usuario es ADMIN, las verá todas.
++ _**GET**_ > **tareas/obtener/{_idUsuario}** > Endpoint que retorna todas las tareas creadas. Si el usuario es USER, solo verá las suyas y si el usuario es ADMIN, las verá todas.
 
     Devolverá un _OK_ si la petición es realizada sin problemas o un _NOT_FOUND_ si no existen tareas.
 + _**UPDATE**_ > **tareas/marcarTerminada/{_idTarea}** > Endpoint que va a permitir a un usuario USER marcar una tarea cuyo _id coincida con la proporcionada por parámetro como completada. O a un usuario ADMIN marcar cualquier tarea de cualquier usuario que coincida con el _id como completada. 
