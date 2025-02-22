@@ -1,4 +1,6 @@
 package com.apirestsegura.ApiRestSegura2.Dto
 
-data class TareaDTO(val titulo: String, val estado: Boolean) {
+import java.util.*
+
+data class TareaDTO(val titulo: String, val estado: Boolean, val usuario: String, val fechaProgramada: Date) {
 }

@@ -92,7 +92,7 @@ class UsuarioController {
             return if (result != null) {
                 ResponseEntity(result, HttpStatus.OK)
             } else {
-                ResponseEntity(null, HttpStatus.BAD_REQUEST)
+                ResponseEntity("No se pudo actualizar el usuario.", HttpStatus.BAD_REQUEST)
             }
         }
         catch (e: AuthenticationException) {

@@ -6,6 +6,8 @@ import com.apirestsegura.ApiRestSegura2.Model.Tarea
 import com.apirestsegura.ApiRestSegura2.Repository.TareaRepository
 import com.apirestsegura.ApiRestSegura2.Repository.UsuarioRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.crossstore.ChangeSetPersister
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.time.Instant
 import java.util.*
@@ -34,7 +36,9 @@ class TareaService {
 
         return TareaDTO(
             titulo = tarea.titulo,
-            estado = tarea.estado
+            estado = tarea.estado,
+            usuario = tarea.usuario.username,
+            fechaProgramada = tarea.fechaProgramada
         )
     }
 
@@ -42,13 +46,75 @@ class TareaService {
         val tareaExistente = tareaRepository.findById(idTarea).getOrNull()
         if (tareaExistente != null) {
             tareaExistente.estado = true
+            tareaRepository.save(tareaExistente)
             return TareaDTO(
                 tareaExistente.titulo,
-                tareaExistente.estado
+                tareaExistente.estado,
+                tareaExistente.usuario.username,
+                tareaExistente.fechaProgramada
             )
         }
         else{
             throw BadRequestException("No existe una tarea con ese id.")
         }
     }
+
+
+    fun getTareas(): List<TareaDTO> {
+
+        val tareas = tareaRepository.findAll()
+        if (tareas.isNotEmpty()) {
+            return tareas.map { TareaDTO(it.titulo, it.estado, it.usuario.username, it.fechaProgramada) }
+        }
+        else {
+            return emptyList()
+        }
+
+    }
+
+    fun getTareas(nombreUsuario: String): List<TareaDTO> {
+
+        val usuarioExistente = usuarioRepository.findByUsername(nombreUsuario).getOrNull()
+        if (usuarioExistente != null) {
+            val tareas = tareaRepository.findAll().filter { it.usuario.username.uppercase() == nombreUsuario.uppercase() }
+            if (tareas.isNotEmpty()) {
+                return tareas.map { TareaDTO(it.titulo, it.estado, it.usuario.username, it.fechaProgramada) }
+            }
+            else {
+                return emptyList()
+            }
+        }
+        else {
+            throw BadRequestException("No existe ese usuario.")
+        }
+    }
+
+
+    fun getTarea(idTarea: Int): TareaDTO {
+        val tareaExistente = tareaRepository.findByIdOrNull(idTarea)
+        if (tareaExistente != null) {
+            return TareaDTO(
+                tareaExistente.titulo,
+                tareaExistente.estado,
+                tareaExistente.usuario.username,
+                tareaExistente.fechaProgramada
+            )
+        }
+        else {
+            throw BadRequestException("No existe una tarea con ese id.")
+        }
+    }
+
+
+    fun deleteTarea(idTarea: Int): Boolean {
+        val tareaExistente = tareaRepository.findByIdOrNull(idTarea)
+        if (tareaExistente != null) {
+            tareaRepository.delete(tareaExistente)
+            return true
+        }
+        else {
+            throw BadRequestException("No existe una tarea con ese id.")
+        }
+    }
+
 }

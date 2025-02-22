@@ -47,7 +47,9 @@ class SecurityConfig {
 
                 // TAREAS
                 .requestMatchers(HttpMethod.POST, "/tareas/crear").authenticated()
-
+                .requestMatchers(HttpMethod.GET, "/tareas/obtener").authenticated()
+                .requestMatchers(HttpMethod.PUT, "/tareas/marcar/{idTarea}").authenticated()
+                .requestMatchers(HttpMethod.PUT, "/tareas/eliminar/{idTarea}").authenticated()
 
 
                 .anyRequest().authenticated()
