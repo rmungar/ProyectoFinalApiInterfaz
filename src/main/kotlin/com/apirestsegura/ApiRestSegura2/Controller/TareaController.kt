@@ -6,6 +6,7 @@ import com.apirestsegura.ApiRestSegura2.Model.Tarea
 import com.apirestsegura.ApiRestSegura2.Service.TareaService
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.mongodb.repository.Update
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -51,6 +52,31 @@ class TareaController {
     @GetMapping
     fun getTareas():ResponseEntity<List<Tarea>?>{
         TODO()
+    }
+
+
+    @PutMapping("/marcar/{idTarea}")
+    fun marcarCompletada(
+        @PathVariable idTarea: Int?,
+    ): ResponseEntity<Any>?{
+        try {
+            if (idTarea != null) {
+                val result = tareaService.marcarCompletada(idTarea)
+                return ResponseEntity(result, HttpStatus.OK)
+            }
+            else{
+                return ResponseEntity(null, HttpStatus.BAD_REQUEST)
+            }
+        }
+        catch (e: UnauthorizedException) {
+            return ResponseEntity(e.message, HttpStatus.UNAUTHORIZED)
+        }
+        catch (e: BadRequestException) {
+            return ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
+        }
+        catch (e: Exception) {
+            return ResponseEntity(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
+        }
     }
 
 }

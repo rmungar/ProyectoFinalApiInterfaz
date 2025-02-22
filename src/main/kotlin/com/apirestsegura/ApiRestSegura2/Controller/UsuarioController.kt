@@ -75,14 +75,12 @@ class UsuarioController {
             return ResponseEntity(mapOf("token" to token), HttpStatus.CREATED)
 
         } catch (e: AuthenticationException) {
-            throw UnauthorizedException("Credenciales incorrectas")
+            return ResponseEntity(e.message, HttpStatus.UNAUTHORIZED)
         }
         catch (e: Exception) {
             return ResponseEntity(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
-
-
 
     @PutMapping("/update")
     fun updateUser(
@@ -98,14 +96,12 @@ class UsuarioController {
             }
         }
         catch (e: AuthenticationException) {
-            throw UnauthorizedException("Credenciales incorrectas")
+            return ResponseEntity(e.message, HttpStatus.UNAUTHORIZED)
         }
         catch (e: Exception) {
             return ResponseEntity(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
-
-
 
     @DeleteMapping("/delete/{usuarioId}")
     fun deleteUser(

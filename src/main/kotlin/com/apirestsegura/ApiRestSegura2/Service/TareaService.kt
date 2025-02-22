@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.time.Instant
 import java.util.*
+import kotlin.jvm.optionals.getOrNull
 
 @Service
 class TareaService {
@@ -35,5 +36,19 @@ class TareaService {
             titulo = tarea.titulo,
             estado = tarea.estado
         )
+    }
+
+    fun marcarCompletada(idTarea: Int): TareaDTO {
+        val tareaExistente = tareaRepository.findById(idTarea).getOrNull()
+        if (tareaExistente != null) {
+            tareaExistente.estado = true
+            return TareaDTO(
+                tareaExistente.titulo,
+                tareaExistente.estado
+            )
+        }
+        else{
+            throw BadRequestException("No existe una tarea con ese id.")
+        }
     }
 }

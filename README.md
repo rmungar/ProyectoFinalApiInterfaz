@@ -25,14 +25,14 @@ Documento donde vamos a almacenar la información sobre los usuarios de la base 
 
 Documento donde vamos a almacenar la información sobre las tareas que se les asignan a los usuarios.
 
-| _**Campo**_         | **_Tipo_** | **_Descripción_**                                                                                         |
-|---------------------|------------|-----------------------------------------------------------------------------------------------------------|
-| **_id**             | String?    | Campo que va a actuar como la clave primaria de la tabla. Se iguala a una mezcla de la fecha y el título. |
-| **titulo**          | String     | Campo que resume la tarea.                                                                                |
-| **estado**          | Boolean    | Campo que indica el estado de la tarea. True = Terminado, False =  En proceso.                            |
-| **descripcion**     | String     | Campo que indica en que consiste la tarea.                                                                |
-| **usuario**         | Usuario    | Campo que indica el usuario en posesión de esa tarea.                                                     |
-| **fechaProgramada** | Date       | Fecha límite para la realización de la tarea.                                                             |
+| _**Campo**_         | **_Tipo_** | **_Descripción_**                                                                  |
+|---------------------|------------|------------------------------------------------------------------------------------|
+| **_id**             | Int?       | Campo que va a actuar como la clave primaria de la tabla. Será un autoincremental. |
+| **titulo**          | String     | Campo que resume la tarea.                                                         |
+| **estado**          | Boolean    | Campo que indica el estado de la tarea. True = Terminado, False =  En proceso.     |
+| **descripcion**     | String     | Campo que indica en que consiste la tarea.                                         |
+| **usuario**         | Usuario    | Campo que indica el usuario en posesión de esa tarea.                              |
+| **fechaProgramada** | Date       | Fecha límite para la realización de la tarea.                                      |
 
 + El campo `titulo` no puede estar vacío o ser nulo.
 + El campo `descripcion` no puede estar vacío o ser nulo.

@@ -8,11 +8,16 @@ import java.util.Date
 @Document("Tareas")
 data class Tarea(
     @BsonId
-    var _id: String? = null,
+    var _id: Int? = null,
     val titulo: String,
     var estado: Boolean = false,
     val descripcion: String,
     val usuario: UsuarioDTO,
     val fechaProgramada: Date
 ) {
+    private var cont = 0
+    init {
+        _id = ++cont
+    }
+
 }
