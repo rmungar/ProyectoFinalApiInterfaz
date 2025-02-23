@@ -37,7 +37,7 @@ class TareaController {
                 if (usuarioActual != null) {
                     if (usuarioActual != tarea.usuario.username) {
                         val rolUsuario = authService.getRolFromToken()
-                        if (rolUsuario != null && rolUsuario == "ADMIN") {
+                        if (rolUsuario != null && rolUsuario == "ROLE_ADMIN") {
                             val result = tareaService.createTarea(tarea)
                             return ResponseEntity(result, HttpStatus.CREATED)
                         }
@@ -77,7 +77,7 @@ class TareaController {
             val rolUsuarioActual = authService.getRolFromToken()
             val nombreUsuarioActual = authService.getUsernameFromToken()
             if (rolUsuarioActual != null) {
-                if (rolUsuarioActual == "ADMIN") {
+                if (rolUsuarioActual == "ROLE_ADMIN") {
                     val result = tareaService.getTareas()
                     if (result.isNotEmpty()) return ResponseEntity(result, HttpStatus.OK)
                     else return ResponseEntity("No se encontraron tareas en la base de datos.", HttpStatus.NOT_FOUND)
@@ -123,7 +123,7 @@ class TareaController {
                 if (usuarioActual != null) {
                     if (usuarioActual != tareaActual.usuario) {
                         val rolUsuario = authService.getRolFromToken()
-                        if (rolUsuario != null && rolUsuario == "ADMIN") {
+                        if (rolUsuario != null && rolUsuario == "ROLE_ADMIN") {
                             val result = tareaService.marcarCompletada(idTarea)
                             return ResponseEntity(result, HttpStatus.OK)
                         }
@@ -168,7 +168,7 @@ class TareaController {
 
                 if (rolUsuarioActual != null) {
                     if (nombreUsuarioActual != tareaActual.usuario) {
-                        if (rolUsuarioActual == "ADMIN") {
+                        if (rolUsuarioActual == "ROLE_ADMIN") {
                             val result = tareaService.deleteTarea(idTarea)
                             if (result) return ResponseEntity("La tarea se ha borrado correctamente.", HttpStatus.OK)
                             else return ResponseEntity("No se pudo eliminar la tarea.", HttpStatus.BAD_REQUEST)

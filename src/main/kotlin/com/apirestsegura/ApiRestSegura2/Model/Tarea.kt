@@ -15,8 +15,9 @@ data class Tarea(
     val usuario: UsuarioDTO,
     val fechaProgramada: Date
 ) {
-    private var cont = 0
+
     init {
+        var cont = 0
         _id = ++cont
     }
 
