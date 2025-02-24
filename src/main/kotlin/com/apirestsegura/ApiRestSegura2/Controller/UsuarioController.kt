@@ -127,7 +127,7 @@ class UsuarioController {
         }
     }
 
-    @GetMapping("/usuarios/usuario/{id}")
+    @GetMapping("/usuario/{id}")
     fun getUser(
         httpRequest: HttpServletRequest,
         @PathVariable("id") usuarioId: String?
