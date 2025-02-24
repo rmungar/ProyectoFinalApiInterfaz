@@ -31,7 +31,7 @@ class UsuarioController {
     fun insert(
         httpRequest: HttpServletRequest,
         @RequestBody usuarioRegisterDTO: UsuarioRegisterDTO
-    ) : ResponseEntity<Any>?{
+    ) : ResponseEntity<Any>{
 
         try {
             val usuarioRegister = UsuarioRegisterDTO(
@@ -65,7 +65,7 @@ class UsuarioController {
     fun login(
         httpRequest: HttpServletRequest,
         @RequestBody usuario: LoginUsuarioDTO
-    ) : ResponseEntity<Any>? {
+    ) : ResponseEntity<Any> {
 
         val authentication: Authentication
         try {
@@ -86,7 +86,7 @@ class UsuarioController {
     fun updateUser(
         httpRequest: HttpServletRequest,
         @RequestBody userData: UsuarioRegisterDTO
-    ): ResponseEntity<Any>? {
+    ): ResponseEntity<Any> {
         try {
             val result = usuarioService.updateUser(userData)
             return if (result != null) {
@@ -107,7 +107,7 @@ class UsuarioController {
     fun deleteUser(
         httpRequest: HttpServletRequest,
         @PathVariable("usuarioId") usuarioId: String?
-    ): ResponseEntity<Any>? {
+    ): ResponseEntity<Any> {
         try {
             if (usuarioId != null) {
                 val result = usuarioService.deleteUser(usuarioId)
@@ -131,7 +131,7 @@ class UsuarioController {
     fun getUser(
         httpRequest: HttpServletRequest,
         @PathVariable("id") usuarioId: String?
-    ): ResponseEntity<Any>? {
+    ): ResponseEntity<Any> {
         try {
             if (usuarioId != null) {
                 val result = usuarioService.loadUserById(id = usuarioId)

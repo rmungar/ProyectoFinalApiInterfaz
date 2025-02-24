@@ -48,8 +48,8 @@ class UsuarioService : UserDetailsService {
 
         return UsuarioDTO(
             username = usuario.username,
-            rol = usuario.rol,
             email = usuario.email,
+            rol = usuario.rol
         )
     }
 
