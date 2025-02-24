@@ -33,7 +33,6 @@ class TareaController {
             if (tarea != null) {
 
                 val usuarioActual = authService.getUsernameFromToken()
-
                 if (usuarioActual != null) {
                     if (usuarioActual != tarea.usuario.username) {
                         val rolUsuario = authService.getRolFromToken()
@@ -65,7 +64,7 @@ class TareaController {
             return ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
         }
         catch (e: Exception) {
-            return ResponseEntity(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
+            return ResponseEntity(e.cause, HttpStatus.INTERNAL_SERVER_ERROR)
         }
 
     }
