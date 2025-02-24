@@ -41,7 +41,7 @@ class UsuarioService : UserDetailsService {
 
     fun loadUserById(id: String?): UsuarioDTO {
         val usuario: Usuario = usuarioRepository
-            .findByUsername(id!!)
+            .findById(id!!)
             .orElseThrow {
                 UserNotFoundException("No se encontró un usuario con el nombre: $id.")
             }
