@@ -126,4 +126,26 @@ class UsuarioController {
             return ResponseEntity(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
+
+    @GetMapping("/usuarios/usuario/{id}")
+    fun getUser(
+        httpRequest: HttpServletRequest,
+        @PathVariable("id") usuarioId: String?
+    ): ResponseEntity<Any>? {
+        try {
+            if (usuarioId != null) {
+                val result = usuarioService.loadUserById(id = usuarioId)
+                return ResponseEntity(result, HttpStatus.OK)
+            }
+            else{
+                return ResponseEntity("No se pudo obtener el usuario.", HttpStatus.BAD_REQUEST)
+            }
+        }
+        catch (e: UnauthorizedException) {
+            return ResponseEntity(e.message, HttpStatus.UNAUTHORIZED)
+        }
+        catch (e: Exception) {
+            return ResponseEntity(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+    }
 }

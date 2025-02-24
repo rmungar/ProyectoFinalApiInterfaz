@@ -39,6 +39,20 @@ class UsuarioService : UserDetailsService {
             .build()
     }
 
+    fun loadUserById(id: String?): UsuarioDTO {
+        val usuario: Usuario = usuarioRepository
+            .findByUsername(id!!)
+            .orElseThrow {
+                UserNotFoundException("No se encontró un usuario con el nombre: $id.")
+            }
+
+        return UsuarioDTO(
+            username = usuario.username,
+            rol = usuario.rol,
+            email = usuario.email,
+        )
+    }
+
     fun insertUser(usuarioInsertadoDTO: UsuarioRegisterDTO) : UsuarioDTO? {
         var provinciaExistente = false
         var municipioDeProvincia = false
