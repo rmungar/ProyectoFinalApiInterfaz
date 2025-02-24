@@ -5,6 +5,7 @@ import com.apirestsegura.ApiRestSegura2.Error.exception.BadRequestException
 import com.apirestsegura.ApiRestSegura2.Model.Tarea
 import com.apirestsegura.ApiRestSegura2.Repository.TareaRepository
 import com.apirestsegura.ApiRestSegura2.Repository.UsuarioRepository
+import com.example.interfazusuarioapi.Dto.TareaCrearDTO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.crossstore.ChangeSetPersister
 import org.springframework.data.repository.findByIdOrNull
@@ -22,7 +23,7 @@ class TareaService {
     @Autowired
     private lateinit var usuarioRepository: UsuarioRepository
 
-    fun createTarea(tarea: Tarea): TareaDTO {
+    fun createTarea(tarea: TareaCrearDTO): TareaDTO {
         if (tarea.titulo.isBlank()) throw BadRequestException("El título de la tarea no puede estar vacío.")
         if (tarea.descripcion.isBlank()) throw BadRequestException("La descripción de la tarea no puede estar vacía.")
         if (tarea.estado) throw BadRequestException("La tarea no puede estar completada.")
@@ -32,7 +33,17 @@ class TareaService {
         }
         if (tarea.fechaProgramada.before(Date.from(Instant.now()))) throw BadRequestException("La fecha debe de ser posterior al momento de asignación.")
 
-        tareaRepository.save(tarea)
+
+        val task = Tarea(
+            tarea._id,
+            tarea.titulo,
+            tarea.estado,
+            tarea.descripcion,
+            tarea.usuario,
+            tarea.fechaProgramada,
+        )
+
+        tareaRepository.save(task)
 
         return TareaDTO(
             titulo = tarea.titulo,

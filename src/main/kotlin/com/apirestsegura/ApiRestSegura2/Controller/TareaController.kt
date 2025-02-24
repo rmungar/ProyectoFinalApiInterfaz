@@ -5,6 +5,7 @@ import com.apirestsegura.ApiRestSegura2.Error.exception.UnauthorizedException
 import com.apirestsegura.ApiRestSegura2.Model.Tarea
 import com.apirestsegura.ApiRestSegura2.Service.AuthService
 import com.apirestsegura.ApiRestSegura2.Service.TareaService
+import com.example.interfazusuarioapi.Dto.TareaCrearDTO
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -26,7 +27,7 @@ class TareaController {
     @PostMapping("/crear")
     fun addTarea(
         httpServletRequest: HttpServletRequest,
-        @RequestBody tarea: Tarea?
+        @RequestBody tarea: TareaCrearDTO?
     ): ResponseEntity<Any>? {
 
         try {
@@ -64,7 +65,7 @@ class TareaController {
             return ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
         }
         catch (e: Exception) {
-            return ResponseEntity(e.cause, HttpStatus.INTERNAL_SERVER_ERROR)
+            return ResponseEntity(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
         }
 
     }

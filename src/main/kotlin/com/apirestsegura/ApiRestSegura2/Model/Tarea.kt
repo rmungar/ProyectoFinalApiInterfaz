@@ -16,8 +16,11 @@ data class Tarea(
     val fechaProgramada: Date
 ) {
 
-    init {
+    companion object {
         var cont = 0
+    }
+
+    init {
         _id = ++cont
     }
 
