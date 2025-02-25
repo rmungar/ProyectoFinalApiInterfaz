@@ -10,7 +10,6 @@ class TareaCrearDTO(
     var estado: Boolean = false,
     val descripcion: String,
     val usuario: UsuarioDTO,
-    val fechaProgramada: Date
 ) {
 
 }

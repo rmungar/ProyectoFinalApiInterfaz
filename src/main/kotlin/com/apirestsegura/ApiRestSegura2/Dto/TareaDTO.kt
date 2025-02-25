@@ -6,7 +6,4 @@ import java.util.*
 data class TareaDTO(
     val titulo: String,
     val estado: Boolean,
-    val usuario: String,
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    val fechaProgramada: Date) {
-}
+    val usuario: String)

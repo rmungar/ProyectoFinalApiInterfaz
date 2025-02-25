@@ -31,7 +31,7 @@ class TareaService {
         if (!usuarioExistente.isPresent) {
             throw BadRequestException("El usuario debe existir en la base de datos.")
         }
-        if (tarea.fechaProgramada.before(Date.from(Instant.now()))) throw BadRequestException("La fecha debe de ser posterior al momento de asignación.")
+
 
 
         val task = Tarea(
@@ -39,8 +39,7 @@ class TareaService {
             tarea.titulo,
             tarea.estado,
             tarea.descripcion,
-            tarea.usuario,
-            tarea.fechaProgramada,
+            tarea.usuario
         )
 
         tareaRepository.save(task)
@@ -49,7 +48,6 @@ class TareaService {
             titulo = tarea.titulo,
             estado = tarea.estado,
             usuario = tarea.usuario.username,
-            fechaProgramada = tarea.fechaProgramada
         )
     }
 
@@ -61,8 +59,7 @@ class TareaService {
             return TareaDTO(
                 tareaExistente.titulo,
                 tareaExistente.estado,
-                tareaExistente.usuario.username,
-                tareaExistente.fechaProgramada
+                tareaExistente.usuario.username
             )
         }
         else{
@@ -75,7 +72,7 @@ class TareaService {
 
         val tareas = tareaRepository.findAll()
         if (tareas.isNotEmpty()) {
-            return tareas.map { TareaDTO(it.titulo, it.estado, it.usuario.username, it.fechaProgramada) }
+            return tareas.map { TareaDTO(it.titulo, it.estado, it.usuario.username) }
         }
         else {
             return emptyList()
@@ -89,7 +86,7 @@ class TareaService {
         if (usuarioExistente != null) {
             val tareas = tareaRepository.findAll().filter { it.usuario.username.uppercase() == nombreUsuario.uppercase() }
             if (tareas.isNotEmpty()) {
-                return tareas.map { TareaDTO(it.titulo, it.estado, it.usuario.username, it.fechaProgramada) }
+                return tareas.map { TareaDTO(it.titulo, it.estado, it.usuario.username) }
             }
             else {
                 return emptyList()
@@ -108,7 +105,6 @@ class TareaService {
                 tareaExistente.titulo,
                 tareaExistente.estado,
                 tareaExistente.usuario.username,
-                tareaExistente.fechaProgramada
             )
         }
         else {
@@ -120,8 +116,7 @@ class TareaService {
     fun getTareaIdByData(tarea:TareaDTO): Int{
         val tareaExistente = tareaRepository.findAll().filter {
             it.estado == tarea.estado &&
-            it.usuario.username == tarea.usuario &&
-            it.fechaProgramada == tarea.fechaProgramada
+            it.usuario.username == tarea.usuario
         }.firstOrNull()
 
         if (tareaExistente != null) {
