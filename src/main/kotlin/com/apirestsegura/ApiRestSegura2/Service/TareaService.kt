@@ -1,6 +1,7 @@
 package com.apirestsegura.ApiRestSegura2.Service
 
 import com.apirestsegura.ApiRestSegura2.Dto.TareaDTO
+import com.apirestsegura.ApiRestSegura2.Dto.TareaReturnDTO
 import com.apirestsegura.ApiRestSegura2.Error.exception.BadRequestException
 import com.apirestsegura.ApiRestSegura2.Model.Tarea
 import com.apirestsegura.ApiRestSegura2.Repository.TareaRepository
@@ -98,10 +99,11 @@ class TareaService {
     }
 
 
-    fun getTarea(idTarea: Int): TareaDTO {
+    fun getTarea(idTarea: Int): TareaReturnDTO {
         val tareaExistente = tareaRepository.findByIdOrNull(idTarea)
         if (tareaExistente != null) {
-            return TareaDTO(
+            return TareaReturnDTO(
+                tareaExistente._id!!,
                 tareaExistente.titulo,
                 tareaExistente.estado,
                 tareaExistente.usuario.username,
