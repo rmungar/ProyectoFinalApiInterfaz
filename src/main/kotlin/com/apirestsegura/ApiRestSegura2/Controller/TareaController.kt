@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.text.ParseException
 
 @RestController
 @RequestMapping("/tareas")
@@ -42,7 +43,7 @@ class TareaController {
                             return ResponseEntity(result, HttpStatus.CREATED)
                         }
                         else {
-                            return ResponseEntity("No puedes añadirle una tarea a oto usuario.", HttpStatus.FORBIDDEN)
+                            return ResponseEntity("No puedes añadirle una tarea a otro usuario.", HttpStatus.FORBIDDEN)
                         }
                     }
                     else{
@@ -64,7 +65,7 @@ class TareaController {
         catch (e: BadRequestException) {
             return ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
         }
-        catch (e: Exception) {
+        catch (e: ParseException) {
             return ResponseEntity(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
         }
 

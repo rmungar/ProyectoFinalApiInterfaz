@@ -21,7 +21,8 @@ data class Tarea(
     }
 
     init {
-        _id = ++cont
+        if (_id == null){
+            _id = ++cont
+        }
     }
-
 }
