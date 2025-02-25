@@ -51,7 +51,7 @@ class TareaService {
         )
     }
 
-    fun marcarCompletada(idTarea: Int): TareaReturnDTO {
+    fun marcarCompletada(idTarea: String): TareaReturnDTO {
         val tareaExistente = tareaRepository.findById(idTarea).getOrNull()
         if (tareaExistente != null) {
             tareaExistente.estado = true
@@ -98,7 +98,7 @@ class TareaService {
     }
 
 
-    fun getTarea(idTarea: Int): TareaReturnDTO {
+    fun getTarea(idTarea: String): TareaReturnDTO {
         val tareaExistente = tareaRepository.findByIdOrNull(idTarea)
         if (tareaExistente != null) {
             return TareaReturnDTO(
@@ -114,14 +114,14 @@ class TareaService {
     }
 
 
-    fun getTareaIdByData(tarea:TareaDTO): Int{
+    fun getTareaIdByData(tarea:TareaDTO): String{
         val tareaExistente = tareaRepository.findAll().filter {
             it.estado == tarea.estado &&
             it.usuario.username == tarea.usuario
         }.firstOrNull()
 
         if (tareaExistente != null) {
-            return tareaExistente._id ?: 0
+            return tareaExistente._id ?: ""
         }
         else{
             throw BadRequestException("No existe tarea con esas condiciones.")
@@ -129,7 +129,7 @@ class TareaService {
     }
 
 
-    fun deleteTarea(idTarea: Int): Boolean {
+    fun deleteTarea(idTarea: String): Boolean {
         val tareaExistente = tareaRepository.findByIdOrNull(idTarea)
         if (tareaExistente != null) {
             tareaRepository.delete(tareaExistente)

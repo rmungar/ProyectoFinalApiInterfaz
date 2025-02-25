@@ -72,7 +72,6 @@ class TareaController {
 
     }
 
-
     @GetMapping("/obtener")
     fun getTareas():ResponseEntity<Any>{
         try {
@@ -113,7 +112,7 @@ class TareaController {
 
     @PutMapping("/marcar/{idTarea}")
     fun marcarCompletada(
-        @PathVariable idTarea: Int?,
+        @PathVariable idTarea: String?,
     ): ResponseEntity<Any>?{
         try {
             if (idTarea != null) {
@@ -157,10 +156,9 @@ class TareaController {
         }
     }
 
-
     @DeleteMapping("/eliminar/{idTarea}")
     fun eliminarTarea(
-        @PathVariable idTarea: Int?,
+        @PathVariable idTarea: String?,
     ): ResponseEntity<Any>{
         try {
             if (idTarea != null) {

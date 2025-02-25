@@ -7,20 +7,14 @@ import org.springframework.data.mongodb.core.mapping.Document
 @Document("Tareas")
 data class Tarea(
     @BsonId
-    var _id: Int? = null,
+    var _id: String? = null,
     val titulo: String,
     var estado: Boolean = false,
     val descripcion: String,
     val usuario: UsuarioDTO,
 ) {
 
-    companion object {
-        var cont = 0
-    }
-
     init {
-        if (_id == null){
-            _id = ++cont
-        }
+        _id = "$titulo-${usuario.username}"
     }
 }
