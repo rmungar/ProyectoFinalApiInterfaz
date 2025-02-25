@@ -204,10 +204,10 @@ class TareaController {
         }
     }
 
-    @GetMapping("/obtener/{tarea}")
+    @GetMapping("/obtenerId")
     fun getTareaIdByData(
         httpServletRequest: HttpServletRequest,
-        @PathVariable tarea: TareaDTO?,
+        @RequestBody tarea: TareaDTO?,
     ): ResponseEntity<Any>{
         try {
             if (tarea != null) {
