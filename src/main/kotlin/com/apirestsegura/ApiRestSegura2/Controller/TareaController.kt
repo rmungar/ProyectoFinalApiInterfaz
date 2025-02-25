@@ -1,5 +1,6 @@
 package com.apirestsegura.ApiRestSegura2.Controller
 
+import com.apirestsegura.ApiRestSegura2.Dto.TareaDTO
 import com.apirestsegura.ApiRestSegura2.Error.exception.BadRequestException
 import com.apirestsegura.ApiRestSegura2.Error.exception.UnauthorizedException
 import com.apirestsegura.ApiRestSegura2.Model.Tarea
@@ -65,7 +66,7 @@ class TareaController {
         catch (e: BadRequestException) {
             return ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
         }
-        catch (e: ParseException) {
+        catch (e: Exception) {
             return ResponseEntity(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
         }
 
@@ -190,6 +191,32 @@ class TareaController {
             }
             else{
                 return ResponseEntity("El id de la tarea no puede ser nulo.", HttpStatus.BAD_REQUEST)
+            }
+        }
+        catch (e: UnauthorizedException) {
+            return ResponseEntity(e.message, HttpStatus.UNAUTHORIZED)
+        }
+        catch (e: BadRequestException) {
+            return ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
+        }
+        catch (e: Exception) {
+            return ResponseEntity(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+    }
+
+    @GetMapping("/obtener/{tarea}")
+    fun getTareaIdByData(
+        httpServletRequest: HttpServletRequest,
+        @PathVariable tarea: TareaDTO?,
+    ): ResponseEntity<Any>{
+        try {
+            if (tarea != null) {
+                val result = tareaService.getTareaIdByData(tarea)
+                return ResponseEntity(result, HttpStatus.OK)
+            }
+            else
+            {
+                return ResponseEntity("No se encontró ninguna tarea.", HttpStatus.INTERNAL_SERVER_ERROR)
             }
         }
         catch (e: UnauthorizedException) {

@@ -117,6 +117,22 @@ class TareaService {
     }
 
 
+    fun getTareaIdByData(tarea:TareaDTO): Int{
+        val tareaExistente = tareaRepository.findAll().filter {
+            it.estado == tarea.estado &&
+            it.usuario.username == tarea.usuario &&
+            it.fechaProgramada == tarea.fechaProgramada
+        }.firstOrNull()
+
+        if (tareaExistente != null) {
+            return tareaExistente._id ?: 0
+        }
+        else{
+            throw BadRequestException("No existe tarea con esas condiciones.")
+        }
+    }
+
+
     fun deleteTarea(idTarea: Int): Boolean {
         val tareaExistente = tareaRepository.findByIdOrNull(idTarea)
         if (tareaExistente != null) {
