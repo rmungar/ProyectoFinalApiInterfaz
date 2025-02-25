@@ -33,10 +33,8 @@ class TareaService {
             throw BadRequestException("El usuario debe existir en la base de datos.")
         }
 
-
-
         val task = Tarea(
-            tarea._id,
+            null,
             tarea.titulo,
             tarea.estado,
             tarea.descripcion,
