@@ -204,7 +204,7 @@ class TareaController {
         }
     }
 
-    @GetMapping("/obtenerId")
+    @PostMapping("/obtenerId")
     fun getTareaIdByData(
         httpServletRequest: HttpServletRequest,
         @RequestBody tarea: TareaDTO?,
