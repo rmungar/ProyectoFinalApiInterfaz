@@ -24,7 +24,7 @@ class TareaService {
     @Autowired
     private lateinit var usuarioRepository: UsuarioRepository
 
-    fun createTarea(tarea: TareaCrearDTO): TareaDTO {
+    fun createTarea(tarea: TareaCrearDTO): TareaReturnDTO {
         if (tarea.titulo.isBlank()) throw BadRequestException("El título de la tarea no puede estar vacío.")
         if (tarea.descripcion.isBlank()) throw BadRequestException("La descripción de la tarea no puede estar vacía.")
         if (tarea.estado) throw BadRequestException("La tarea no puede estar completada.")
@@ -45,19 +45,21 @@ class TareaService {
 
         tareaRepository.save(task)
 
-        return TareaDTO(
+        return TareaReturnDTO(
+            _id = tarea._id!!,
             titulo = tarea.titulo,
             estado = tarea.estado,
             usuario = tarea.usuario.username,
         )
     }
 
-    fun marcarCompletada(idTarea: Int): TareaDTO {
+    fun marcarCompletada(idTarea: Int): TareaReturnDTO {
         val tareaExistente = tareaRepository.findById(idTarea).getOrNull()
         if (tareaExistente != null) {
             tareaExistente.estado = true
             tareaRepository.save(tareaExistente)
-            return TareaDTO(
+            return TareaReturnDTO(
+                tareaExistente._id!!,
                 tareaExistente.titulo,
                 tareaExistente.estado,
                 tareaExistente.usuario.username
@@ -68,12 +70,11 @@ class TareaService {
         }
     }
 
-
-    fun getTareas(): List<TareaDTO> {
+    fun getTareas(): List<TareaReturnDTO> {
 
         val tareas = tareaRepository.findAll()
         if (tareas.isNotEmpty()) {
-            return tareas.map { TareaDTO(it.titulo, it.estado, it.usuario.username) }
+            return tareas.map { TareaReturnDTO(it._id!!, it.titulo, it.estado, it.usuario.username) }
         }
         else {
             return emptyList()
@@ -81,13 +82,13 @@ class TareaService {
 
     }
 
-    fun getTareas(nombreUsuario: String): List<TareaDTO> {
+    fun getTareas(nombreUsuario: String): List<TareaReturnDTO> {
 
         val usuarioExistente = usuarioRepository.findByUsername(nombreUsuario).getOrNull()
         if (usuarioExistente != null) {
             val tareas = tareaRepository.findAll().filter { it.usuario.username.uppercase() == nombreUsuario.uppercase() }
             if (tareas.isNotEmpty()) {
-                return tareas.map { TareaDTO(it.titulo, it.estado, it.usuario.username) }
+                return tareas.map { TareaReturnDTO(it._id!!, it.titulo, it.estado, it.usuario.username) }
             }
             else {
                 return emptyList()
