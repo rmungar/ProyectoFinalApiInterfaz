@@ -25,19 +25,17 @@ Documento donde vamos a almacenar la información sobre los usuarios de la base 
 
 Documento donde vamos a almacenar la información sobre las tareas que se les asignan a los usuarios.
 
-| _**Campo**_         | **_Tipo_** | **_Descripción_**                                                                  |
-|---------------------|------------|------------------------------------------------------------------------------------|
-| **_id**             | Int?       | Campo que va a actuar como la clave primaria de la tabla. Será un autoincremental. |
-| **titulo**          | String     | Campo que resume la tarea.                                                         |
-| **estado**          | Boolean    | Campo que indica el estado de la tarea. True = Terminado, False =  En proceso.     |
-| **descripcion**     | String     | Campo que indica en que consiste la tarea.                                         |
-| **usuario**         | Usuario    | Campo que indica el usuario en posesión de esa tarea.                              |
-| **fechaProgramada** | Date       | Fecha límite para la realización de la tarea.                                      |
+| _**Campo**_         | **_Tipo_** | **_Descripción_**                                                              |
+|---------------------|------------|--------------------------------------------------------------------------------|
+| **_id**             | String?    | Campo que va a actuar como la clave primaria de la tabla.                      |
+| **titulo**          | String     | Campo que resume la tarea.                                                     |
+| **estado**          | Boolean    | Campo que indica el estado de la tarea. True = Terminado, False =  En proceso. |
+| **descripcion**     | String     | Campo que indica en que consiste la tarea.                                     |
+| **usuario**         | Usuario    | Campo que indica el usuario en posesión de esa tarea.                          |
 
 + El campo `titulo` no puede estar vacío o ser nulo.
 + El campo `descripcion` no puede estar vacío o ser nulo.
 + El campo `usuario`no puede estar vacío o ser nulo. Debe ser un usuario registrado en la aplicación.
-+ El campo `fechaProgramada` será comprobado automáticamente para evitar asignaciones con fecha previa a la fecha del momento de creación. No puede ser un valor nulo.
 
 
 ## **Endpoints**
@@ -236,3 +234,71 @@ Esto puede deberse a:
 ![passwordNoCoinciden.png](src/main/resources/images/Register/passwordNoCoinciden.png)
 
 ![logCat6.png](src/main/resources/images/Register/logCat6.png)
+
+***
+
+# PRUEBAS GESTIÓN TAREAS
+
+
+## ANTES DE EMPEZAR
+
+Antes de empezar, en la base de datos tenemos los siguientes datos:
+![contenidoBD3.png](src%2Fmain%2Fresources%2Fimages%2FcontenidoBD3.png)
+
+
+## CREAR TAREA EXITOSA
+
+### DESCRIPCIÓN
+Vamos a crear una tarea para nuestro usuario (el mismo que en las pruebas superiores.)
+
+### CAPTURAS
+
+![createTarea.png](src%2Fmain%2Fresources%2Fimages%2FTareas%2FCreate%2FcreateTarea.png)
+
+***
+
+## CREACIÓN FALLIDA
+
+### DESCRIPCIÓN
+
+La creación de una tarea puede fallar por varios motivos:
++ El título no puede estar vacío.
++ La descripción no puede estar vacía.
++ El usuario designado no existe.
++ Un usuario USER no le puede crear una tarea a otro usuario.
++ Ya existe una tarea con ese id.
+
+### CAPTURAS
+
+## TÍTULO VACÍO
+
+![createSinTitulo.png](src%2Fmain%2Fresources%2Fimages%2FTareas%2FCreate%2FcreateSinTitulo.png)
+
+***
+
+## DESCRIPCIÓN VACÍA
+
+![createSinDesc.png](src%2Fmain%2Fresources%2Fimages%2FTareas%2FCreate%2FcreateSinDesc.png)
+
+***
+
+## USUARIO NO EXISTE
+
+![createUsuarioNoExiste.png](src%2Fmain%2Fresources%2Fimages%2FTareas%2FCreate%2FcreateUsuarioNoExiste.png)
+
+***
+
+## UN USUARIO USER NO PUEDE CREARLE LA TAREA A OTRO USUARIO
+
+**CABE DESTACAR QUE HASTA AHORA HEMOS ESTADO UTILIZANDO UN USUARIO ADMIN PARA LAS PRUEBAS, POR LO QUE VAMOS A USAR UN USUARIO USER PARA ESTA PRUEBA**
+
+![contenidoBD4.png](src%2Fmain%2Fresources%2Fimages%2FcontenidoBD4.png)
+
+
+![createDeUserAdmin.png](src%2Fmain%2Fresources%2Fimages%2FTareas%2FCreate%2FcreateDeUserAdmin.png)
+
+***
+
+## TAREA CON ID REPETIDO
+
+![createIdRepetido.png](src%2Fmain%2Fresources%2Fimages%2FTareas%2FCreate%2FcreateIdRepetido.png)

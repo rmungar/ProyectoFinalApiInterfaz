@@ -32,6 +32,12 @@ class TareaService {
         if (!usuarioExistente.isPresent) {
             throw BadRequestException("El usuario debe existir en la base de datos.")
         }
+        val tareas = tareaRepository.findAll()
+        for (tareas in tareas) {
+            if (tareas.titulo == tarea.titulo && tareas.usuario == tarea.usuario) {
+                throw BadRequestException("Ya hay una tarea con ese id.")
+            }
+        }
 
         val task = Tarea(
             null,

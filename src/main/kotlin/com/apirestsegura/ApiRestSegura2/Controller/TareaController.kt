@@ -109,7 +109,6 @@ class TareaController {
         }
     }
 
-
     @PutMapping("/marcar/{idTarea}")
     fun marcarCompletada(
         @PathVariable idTarea: String?,

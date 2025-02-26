@@ -41,7 +41,6 @@ class UsuarioController {
                 passwordRepeat = usuarioRegisterDTO.passwordRepeat,
                 direccion = usuarioRegisterDTO.direccion,
                 rol = usuarioRegisterDTO.rol
-
             )
 
             val result = usuarioService.insertUser(usuarioRegister)
