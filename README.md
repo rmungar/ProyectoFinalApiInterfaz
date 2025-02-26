@@ -302,3 +302,101 @@ La creación de una tarea puede fallar por varios motivos:
 ## TAREA CON ID REPETIDO
 
 ![createIdRepetido.png](src%2Fmain%2Fresources%2Fimages%2FTareas%2FCreate%2FcreateIdRepetido.png)
+
+
+***
+
+## OBTENCIÓN DE TAREAS EXITOSAS
+
+## ANTES DE EMPEZAR
+
+Antes de empezar, este es el contenido de la base de datos:
+
+![contenidoBD5.png](src/main/resources/images/contenidoBD5.png)
+![contenidoBD6.png](src/main/resources/images/contenidoBD6.png)
+
+## DESCRIPCIÓN
+
+A continuación, vamos a obtener todas las tareas posibles para un usuario ADMIN y un usuario USER
+
+## CAPTURAS
+
+### USUARIO ADMIN
+
+![getUserAdmin.png](src/main/resources/images/Tareas/Get/getUserAdmin.png)
+
+***
+
+### USUARIO USER
+
+![getUserUser.png](src/main/resources/images/Tareas/Get/getUserUser.png)
+
+***
+
+## OBTENCIÓN DE TAREAS FALLIDA
+
+## DESCRIPCIÓN
+
+En este caso, este endpoint no puede fallar, salvo que no se halla realizado el login perviamente.
+
+## CAPTURAS
+
+![getSinLogin.png](src/main/resources/images/Tareas/Get/getSinLogin.png)
+
+***
+
+## ACTUALIZACIÓN DE TAREA EXITOSA
+
+## DESCRIPCIÓN
+
+Para esta prueba vamos a intentar actualizar el estado de una tarea en concreto con un usuario ADMIN y otro USER.
+
+## CAPTURAS
+
+### USUARIO ADMIN (TAREA PROPIA)
+
+![updateAdmin.png](src/main/resources/images/Tareas/Update/updateAdminPropia.png)
+
+![updateAdminPrueba1.png](src/main/resources/images/Tareas/Update/updateAdminPrueba1.png)
+
+![updateAdminPrueba2.png](src/main/resources/images/Tareas/Update/updateAdminPrueba2.png)
+
+*** 
+
+### USUARIO ADMIN (TAREA AJENA)
+
+![updateAdminAjena.png](src/main/resources/images/Tareas/Update/updateAdminAjena.png)
+
+![updateAdminPrueba3.png](src/main/resources/images/Tareas/Update/updateAdminPrueba3.png)
+
+![updateAdminPrueba4.png](src/main/resources/images/Tareas/Update/updateAdminPrueba4.png)
+
+***
+
+### USUARIO USER (TAREA PROPIA)
+
+![updateUserPropia.png](src/main/resources/images/Tareas/Update/updateUserPropia.png)
+
+![updateUserPrueba1.png](src/main/resources/images/Tareas/Update/updateUserPrueba1.png)
+
+![updateUserPrueba2.png](src/main/resources/images/Tareas/Update/updateUserPrueba2.png)
+
+***
+
+## ACTUALIZACIÓN DE TAREA FALLIDA
+
+## DESCRIPCIÓN
+
+Hay que tener en cuenta que este endpoint puede fallar por lo siguiente:
++ Siendo un usuario USER se intenta cambiar la tarea de otro usuario.
++ La tarea no existe.
+
+### USUARIO USER (TAREA AJENA)
+
+![updateUserAjena.png](src/main/resources/images/Tareas/Update/updateUserAjena.png)
+
+***
+
+### LA TAREA NO EXISTE
+
+![updateTareaNoExiste.png](src/main/resources/images/Tareas/Update/updateTareaNoExiste.png)
