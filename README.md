@@ -400,3 +400,65 @@ Hay que tener en cuenta que este endpoint puede fallar por lo siguiente:
 ### LA TAREA NO EXISTE
 
 ![updateTareaNoExiste.png](src/main/resources/images/Tareas/Update/updateTareaNoExiste.png)
+
+***
+
+## ELIMINACIÓN EXITOSA DE UNA TAREA
+
+## DESCRIPCIÓN
+
+Igual que el update y el create, el usuario con rol USER no va a poder eliminar cualquier tarea, salvo que dicha tarea le pertenezca. Mientras que un usuario ADMIN puede borrar cualquier tarea, suya o ajena.
+
+### USUARIO ADMIN (TAREA PROPIA)
+
+Borraremos la primera tarea pasando el id por parámetro en la petición.
+
+![contenidoBD2.png](src/main/resources/images/contenidoBD2.png)
+
+![deleteAdminPropia.png](src/main/resources/images/Tareas/Delete/deleteAdminPropia.png)
+
+![deleteAdminPropiaPrueba.png](src/main/resources/images/Tareas/Delete/deleteAdminPropiaPrueba.png)
+
+***
+
+### USUARIO ADMIN (TAREA AJENA)
+
+En este caso borraremos la tarea que pertenece al usuario "usuario".
+
+![deleteAdminAjena.png](src/main/resources/images/Tareas/Delete/deleteAdminAjena.png)
+
+![deleteAdminAjenaPrueba.png](src/main/resources/images/Tareas/Delete/deleteAdminAjenaPrueba.png)
+
+***
+
+### USUARIO USER (TAREA PROPIA)
+
+Primero creamos una tarea, ya que no quedan tareas de este usuario.
+
+![deleteUserPropia1.png](src/main/resources/images/Tareas/Delete/deleteUserPropia1.png)
+
+![deleteUserPropia2.png](src/main/resources/images/Tareas/Delete/deleteUserPropia2.png)
+
+***
+
+## ELIMINACIÓN FALLIDA DE UNA TAREA
+
+## DESCRIPCIÓN
+
+Borrar una tarea puede fallar debido a lo siguiente:
++ Un usuario con rol USER intenta borrar una tarea que no le pertenece.
++ Se intenta borrar una tarea que no existe.
+
+### USUARIO USER (TAREA AJENA)
+
+Para esta prueba vamos a borrar cualquier tarea que no le pertenezca a nuestro usuario.
+
+![deleteUserAjena.png](src/main/resources/images/Tareas/Delete/deleteUserAjena.png)
+
+***
+
+### LA TAREA NO EXISTE
+
+Ingresando un id de tarea que no existe, veremos que nos devuelve un error 400.
+
+![deleteTareaNoExiste.png](src/main/resources/images/Tareas/Delete/deleteTareaNoExiste.png)
