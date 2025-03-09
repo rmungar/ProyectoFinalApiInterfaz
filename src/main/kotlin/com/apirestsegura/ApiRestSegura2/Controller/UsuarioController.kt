@@ -182,5 +182,4 @@ class UsuarioController {
             return ResponseEntity(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
-
 }
