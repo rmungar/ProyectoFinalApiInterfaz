@@ -151,7 +151,7 @@ class UsuarioController {
     }
 
 
-    @GetMapping("/")
+    @GetMapping("/get")
     fun getAllUsers(
         httpRequest: HttpServletRequest
     ): ResponseEntity<Any>? {

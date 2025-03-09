@@ -45,6 +45,7 @@ class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT, "/usuarios/update").authenticated()
                 .requestMatchers(HttpMethod.DELETE, "/usuarios/delete/{usuarioId}").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/usuarios/usuario/{id}").authenticated()
+                .requestMatchers(HttpMethod.GET, "/usuarios/get").authenticated()
                 // TAREAS
                 .requestMatchers(HttpMethod.POST, "/tareas/crear").authenticated()
                 .requestMatchers(HttpMethod.GET, "/tareas/obtener").authenticated()
