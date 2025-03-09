@@ -4,6 +4,7 @@ import com.apirestsegura.ApiRestSegura2.Dto.LoginUsuarioDTO
 import com.apirestsegura.ApiRestSegura2.Dto.UsuarioRegisterDTO
 import com.apirestsegura.ApiRestSegura2.Error.exception.BadRequestException
 import com.apirestsegura.ApiRestSegura2.Error.exception.UnauthorizedException
+import com.apirestsegura.ApiRestSegura2.Service.AuthService
 import com.apirestsegura.ApiRestSegura2.Service.TokenService
 import com.apirestsegura.ApiRestSegura2.Service.UsuarioService
 import jakarta.servlet.http.HttpServletRequest
@@ -26,6 +27,8 @@ class UsuarioController {
     private lateinit var tokenService: TokenService
     @Autowired
     private lateinit var usuarioService: UsuarioService
+    @Autowired
+    private lateinit var authService: AuthService
 
     @PostMapping("/register")
     fun insert(
@@ -68,7 +71,6 @@ class UsuarioController {
 
         val authentication: Authentication
         try {
-
             authentication = authenticationManager.authenticate(UsernamePasswordAuthenticationToken(usuario.username, usuario.password))
             val token = tokenService.generarToken(authentication)
             return ResponseEntity(mapOf("token" to token), HttpStatus.CREATED)
@@ -147,4 +149,38 @@ class UsuarioController {
             return ResponseEntity(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
+
+
+    @GetMapping
+    fun getAllUsers(
+        httpRequest: HttpServletRequest
+    ): ResponseEntity<Any>? {
+        try {
+            val rolUserActual = authService.getRolFromToken()
+            val usuarioActual = authService.getUsernameFromToken()
+            if (rolUserActual != null && usuarioActual != null) {
+                if (rolUserActual == "ROLE_ADMIN") {
+                    val result = usuarioService.getUsers(1, usuarioActual)
+                    return ResponseEntity(result, HttpStatus.OK)
+                }
+                else if (rolUserActual == "ROLE_USER") {
+                    val result = usuarioService.getUsers(2, usuarioActual)
+                    return ResponseEntity(result, HttpStatus.OK)
+                }
+                else{
+                    return ResponseEntity(null, HttpStatus.BAD_REQUEST)
+                }
+            }
+            else{
+                return ResponseEntity("El usuario no puede ser nulo.", HttpStatus.UNAUTHORIZED)
+            }
+        }
+        catch (e: UnauthorizedException) {
+            return ResponseEntity(e.message, HttpStatus.UNAUTHORIZED)
+        }
+        catch (e: Exception) {
+            return ResponseEntity(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+    }
+
 }
