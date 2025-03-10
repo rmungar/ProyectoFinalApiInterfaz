@@ -167,7 +167,7 @@ class UsuarioService : UserDetailsService {
 
 
     fun getUsers(type: Int, nombre: String): List<UsuarioDTO>{
-        if (type != 1){
+        if (type == 1){
             val listaUsuario = mutableListOf<UsuarioDTO>()
             usuarioRepository.findAll().forEach {
                 listaUsuario.add(UsuarioDTO(it.username,it.email,it.rol))
