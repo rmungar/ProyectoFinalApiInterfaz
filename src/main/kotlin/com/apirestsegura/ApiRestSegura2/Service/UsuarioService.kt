@@ -62,6 +62,7 @@ class UsuarioService : UserDetailsService {
         if (usuarioInsertadoDTO.passwordRepeat.isBlank()) throw BadRequestException("La contraseña del usuario no puede estar vacía.")
         if (usuarioInsertadoDTO.password != usuarioInsertadoDTO.passwordRepeat) throw BadRequestException("Las contraseñas ingresadas no coinciden.")
         if (usuarioInsertadoDTO.rol.isNullOrBlank()) throw BadRequestException("El rol del usuario no puede estar vacío o ser nulo.")
+        if (usuarioInsertadoDTO.rol != "ADMIN" && usuarioInsertadoDTO.rol != "USER") throw BadRequestException("El rol del usuario solo puede ser USER o ADMIN")
         if (usuarioInsertadoDTO.direccion.calle.isBlank()) throw BadRequestException("La calle no puede estar vacía.")
         try {
             usuarioInsertadoDTO.direccion.num.toInt()
